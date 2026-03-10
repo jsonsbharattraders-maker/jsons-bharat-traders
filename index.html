@@ -38,7 +38,6 @@
     .btn-whatsapp { background: linear-gradient(135deg, #075e54, #128c7e); }
     .btn-location { background: linear-gradient(135deg, #c0392b, #e74c3c); }
     .btn-items { background: linear-gradient(135deg, #6a3093, #a044ff); }
-    .btn-qr { background: linear-gradient(135deg, #2c3e50, #34495e); }
     .page { display: none; }
     .page.active { display: block; }
     .back-btn { background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.3); color: #fff; padding: 10px 20px; border-radius: 10px; cursor: pointer; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; font-size: 15px; }
@@ -56,52 +55,6 @@
       border-left: 3px solid #a044ff;
     }
     .no-results { color: rgba(255,255,255,0.5); text-align: center; padding: 20px; font-size: 15px; }
-    
-    .qr-container {
-      background: white;
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-      text-align: center;
-    }
-    .qr-wrapper {
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      border: 3px solid #000;
-      display: inline-block;
-      margin-bottom: 20px;
-      position: relative;
-    }
-    .qr-wrapper canvas {
-      display: block;
-      border-radius: 10px;
-    }
-    .qr-title {
-      color: #000;
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .qr-subtitle {
-      color: #666;
-      font-size: 14px;
-      margin-bottom: 20px;
-    }
-    .download-btn {
-      background: #000;
-      color: white;
-      border: none;
-      padding: 12px 30px;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    .download-btn:hover {
-      background: #333;
-    }
   </style>
 </head>
 <body>
@@ -131,10 +84,6 @@
           <div class="btn-icon">&#128203;</div>
           <div>View Item List</div>
         </button>
-        <button class="btn btn-qr" onclick="showQRPage()">
-          <div class="btn-icon">&#11036;</div>
-          <div>View QR Code</div>
-        </button>
       </div>
     </div>
 
@@ -149,22 +98,8 @@
       </div>
     </div>
 
-    <!-- QR Code Page -->
-    <div id="qrPage" class="page">
-      <button class="back-btn" onclick="showMainPage()">&#8592; Back to Home</button>
-      <div class="qr-container">
-        <div class="qr-title">J. Sons Bharat Trader</div>
-        <div class="qr-subtitle">Scan to visit our website</div>
-        <div class="qr-wrapper">
-          <canvas id="qrCanvas"></canvas>
-        </div>
-        <button class="download-btn" onclick="downloadQR()">&#8595; Download QR Code</button>
-      </div>
-    </div>
-
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
     var items = [
       'Gypsum Board', 'Gypsum Tiles', 'POP', 'PVC Panels', 'WPC Louvers',
@@ -201,50 +136,13 @@
     function showItemPage() {
       document.getElementById('mainPage').classList.remove('active');
       document.getElementById('itemPage').classList.add('active');
-      document.getElementById('qrPage').classList.remove('active');
       document.getElementById('searchInput').value = '';
       renderItems(items);
     }
 
-    function showQRPage() {
-      document.getElementById('mainPage').classList.remove('active');
-      document.getElementById('itemPage').classList.remove('active');
-      document.getElementById('qrPage').classList.add('active');
-      generateQR();
-    }
-
     function showMainPage() {
       document.getElementById('itemPage').classList.remove('active');
-      document.getElementById('qrPage').classList.remove('active');
       document.getElementById('mainPage').classList.add('active');
-    }
-
-    var qrGenerated = false;
-    function generateQR() {
-      if (qrGenerated) return;
-      var canvas = document.getElementById('qrCanvas');
-      var url = window.location.origin + window.location.pathname;
-      
-      QRCode.toCanvas(canvas, url, {
-        width: 280,
-        margin: 2,
-        color: {
-          dark: '#000000',
-          light: '#FFFFFF'
-        },
-        errorCorrectionLevel: 'H'
-      }, function (error) {
-        if (error) console.error(error);
-      });
-      qrGenerated = true;
-    }
-
-    function downloadQR() {
-      var canvas = document.getElementById('qrCanvas');
-      var link = document.createElement('a');
-      link.download = 'J-Sons-Bharat-Trader-QR.png';
-      link.href = canvas.toDataURL();
-      link.click();
     }
   </script>
 </body>
