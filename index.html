@@ -77,28 +77,33 @@
                 <p class="subtitle">Welcome! Please choose an option below.</p>
             </div>
             <div class="buttons">
-                <button class="btn btn-contact" onclick="saveContact()">
+                <!-- Direct link to VCF file for better mobile compatibility -->
+                <a href="nazish-nadeem.vcf" class="btn btn-contact">
                     <div class="btn-icon">👤</div>
                     <div class="btn-text">
                         <span class="btn-title">Save Contact</span>
+                        <span class="btn-sub">Open in phone contacts</span>
                     </div>
-                </button>
+                </a>
                 <a href="https://wa.me/918955568624?text=Welcome" class="btn btn-whatsapp">
                     <div class="btn-icon">💬</div>
                     <div class="btn-text">
-                        <span class="btn-title">Chat with us on WhatsApp</span>
+                        <span class="btn-title">Chat on WhatsApp</span>
+                        <span class="btn-sub">Message us directly</span>
                     </div>
                 </a>
                 <a href="https://maps.app.goo.gl/fiZUEHiMK8YpGxZ7A" class="btn btn-location">
                     <div class="btn-icon">📍</div>
                     <div class="btn-text">
                         <span class="btn-title">Open Location</span>
+                        <span class="btn-sub">View shop in Google Maps</span>
                     </div>
                 </a>
                 <button class="btn btn-items" onclick="showPage('itemPage')">
                     <div class="btn-icon">📋</div>
                     <div class="btn-text">
                         <span class="btn-title">View Item List</span>
+                        <span class="btn-sub">See all products</span>
                     </div>
                 </button>
             </div>
@@ -131,6 +136,7 @@
 
         function renderItems() {
             const list = document.getElementById('itemList');
+            if (!list) return;
             list.innerHTML = '';
             items.forEach((item, index) => {
                 const li = document.createElement('li');
@@ -174,20 +180,6 @@
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             if (pageId === 'itemPage') renderItems();
-        }
-
-        function saveContact() {
-            const vCard = \`BEGIN:VCARD\
-VERSION:3.0\
-FN:Nazish Nadeem\
-TEL:+918955568624\
-END:VCARD\`;
-            const blob = new Blob([vCard], { type: 'text/vcard' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'Nazish_Nadeem.vcf';
-            link.click();
         }
 
         // Initial render
