@@ -68,11 +68,9 @@
         <p class="subtitle">Complete Interior and Exterior Solutions</p>
       </div>
       <div class="buttons">
-        <a href="nazish-nadeem.vcf" class="btn btn-contact">
-          <div class="btn-icon">&#128100;</div>
+        <button onclick="downloadContact()" class="btn btn-contact">          <div class="btn-icon">&#128100;</div>
           <div>Save Contact</div>
-        </a>
-        <a href="https://wa.me/918955568624?text=Welcome" class="btn btn-whatsapp">
+        </button>        <a href="https://wa.me/918955568624?text=Welcome" class="btn btn-whatsapp">
           <div class="btn-icon">&#128172;</div>
           <div>Chat with us on WhatsApp</div>
         </a>
@@ -143,6 +141,29 @@
     function showMainPage() {
       document.getElementById('itemPage').classList.remove('active');
       document.getElementById('mainPage').classList.add('active');
+    }
+
+        function downloadContact() {
+      var vcfData = 'BEGIN:VCARD\n' +
+        'VERSION:3.0\n' +
+        'FN:Nazish Nadeem\n' +
+        'N:Nadeem;Nazish;;;\n' +
+        'ORG:J. Sons Bharat Traders\n' +
+        'TEL;TYPE=CELL,VOICE:+918955568624\n' +
+        'TEL;TYPE=CELL,VOICE:+917250677411\n' +
+        'ADR;TYPE=WORK:;;Tikri Rd, near SD Hospitals;Aurangabad;Bihar;824101;India\n' +
+        'EMAIL:jsonsbharattraders@gmail.com\n' +
+        'END:VCARD';
+      
+      var blob = new Blob([vcfData], { type: 'text/vcard' });
+      var url = URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = url;
+      link.download = 'J-Sons-Bharat-Traders.vcf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     }
   </script>
 </body>
