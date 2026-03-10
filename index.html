@@ -41,7 +41,7 @@
         .btn-icon { background: rgba(255,255,255,0.15); }
         
         .page { display: none; }
-        .page.active { display: block; }
+        .page.active { display: block !important; }
         
         .back-btn { background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.3); color: #fff; padding: 10px 20px; border-radius: 10px; cursor: pointer; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; }
         
@@ -77,7 +77,6 @@
                 <p class="subtitle">Welcome! Please choose an option below.</p>
             </div>
             <div class="buttons">
-                <!-- Direct link to VCF file for better mobile compatibility -->
                 <a href="nazish-nadeem.vcf" class="btn btn-contact">
                     <div class="btn-icon">👤</div>
                     <div class="btn-text">
@@ -177,9 +176,17 @@
         }
 
         function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            if (pageId === 'itemPage') renderItems();
+            const mainPage = document.getElementById('mainPage');
+            const itemPage = document.getElementById('itemPage');
+            
+            if (pageId === 'itemPage') {
+                mainPage.style.display = 'none';
+                itemPage.style.display = 'block';
+                renderItems();
+            } else {
+                mainPage.style.display = 'block';
+                itemPage.style.display = 'none';
+            }
         }
 
         // Initial render
