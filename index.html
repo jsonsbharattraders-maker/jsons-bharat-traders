@@ -3,22 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>J. Sons Bharat Traders</title>
+<title>J. Sons Bharat Trader</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Segoe UI', Arial, sans-serif;
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     padding: 20px 16px 40px;
   }
+  .container { max-width: 480px; margin: 0 auto; }
   .header {
     text-align: center;
-    margin-bottom: 28px;
-    margin-top: 10px;
+    margin-bottom: 12px;
   }
   .logo-circle {
     width: 80px; height: 80px;
@@ -29,61 +26,36 @@
     font-size: 32px;
     box-shadow: 0 4px 20px rgba(233,69,96,0.4);
   }
-  .shop-name {
+  .title {
     color: #fff;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
-    letter-spacing: 0.5px;
-    line-height: 1.3;
+    margin-bottom: 8px;
   }
-  .owner-name {
+  .subtitle {
     color: #a8c6fa;
     font-size: 14px;
-    margin-top: 4px;
+    margin-bottom: 24px;
   }
-  .tagline {
-    color: #7ecfff;
-    font-size: 12px;
-    margin-top: 6px;
-    opacity: 0.85;
-  }
-  .divider {
-    width: 60px; height: 3px;
-    background: linear-gradient(90deg, #e94560, #f5a623);
-    border-radius: 2px;
-    margin: 14px auto 0;
-  }
-  .buttons-grid {
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+  .buttons {
+    display: flex; flex-direction: column; gap: 14px;
+    margin-bottom: 24px;
   }
   .btn {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    display: flex; align-items: center; gap: 16px;
     padding: 18px 22px;
-    border-radius: 16px;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 17px;
-    font-weight: 600;
-    color: #fff;
+    border-radius: 16px; border: none;
+    cursor: pointer; text-decoration: none;
+    font-size: 17px; font-weight: 600; color: #fff;
     transition: transform 0.15s, box-shadow 0.15s;
     box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-    width: 100%;
-    text-align: left;
+    width: 100%; text-align: left;
   }
   .btn:active { transform: scale(0.97); }
   .btn-icon {
-    width: 46px; height: 46px;
-    border-radius: 12px;
+    width: 46px; height: 46px; border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-    flex-shrink: 0;
+    font-size: 22px; flex-shrink: 0;
   }
   .btn-text { display: flex; flex-direction: column; }
   .btn-title { font-size: 16px; font-weight: 700; }
@@ -96,173 +68,208 @@
   .btn-location .btn-icon { background: rgba(255,255,255,0.15); }
   .btn-items { background: linear-gradient(135deg, #6a3093, #a044ff); }
   .btn-items .btn-icon { background: rgba(255,255,255,0.15); }
-  .footer {
-    margin-top: 32px;
-    color: rgba(255,255,255,0.4);
-    font-size: 11px;
-    text-align: center;
+  /* Item List Page */
+  .item-page {
+    display: none; /* Hidden by default, shown when button clicked */
   }
-  /* Modal */
-  .modal-overlay {
-    display: none;
-    position: fixed; top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.75);
-    z-index: 100;
-    align-items: flex-end;
-    justify-content: center;
-  }
-  .modal-overlay.active { display: flex; }
-  .modal {
-    background: #1a1a2e;
-    border-radius: 24px 24px 0 0;
-    width: 100%;
-    max-width: 480px;
-    max-height: 80vh;
-    overflow-y: auto;
-    padding: 24px 20px 40px;
-    border-top: 3px solid #a044ff;
-  }
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  .modal-title { color: #fff; font-size: 18px; font-weight: 700; }
-  .modal-close {
+  .item-page.active { display: block; }
+  .back-btn {
     background: rgba(255,255,255,0.1);
-    border: none; color: #fff;
-    width: 34px; height: 34px;
-    border-radius: 50%;
-    font-size: 18px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
+    border: 2px solid rgba(255,255,255,0.3);
+    color: #fff; padding: 10px 20px;
+    border-radius: 10px; font-size: 14px;
+    cursor: pointer; margin-bottom: 20px;
+    display: inline-flex; align-items: center; gap: 8px;
   }
-  .section-title {
-    color: #a044ff;
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin: 18px 0 10px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid rgba(160,68,255,0.3);
+  .item-table {
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px; padding: 16px;
+    overflow-x: auto;
   }
-  .item-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  .item-table table {
+    width: 100%; border-collapse: collapse;
+    color: #fff;
   }
-  .item-list li {
-    color: #e0e0e0;
-    font-size: 15px;
-    padding: 10px 14px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  .item-table th {
+    background: rgba(160,68,255,0.2);
+    padding: 12px 8px; text-align: left;
+    font-size: 13px; text-transform: uppercase;
+    letter-spacing: 0.5px; border-bottom: 2px solid #a044ff;
   }
-  .item-list li::before {
-    content: '\2713';
-    color: #a044ff;
-    font-weight: 700;
-    flex-shrink: 0;
+  .item-table td {
+    padding: 12px 8px; border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-size: 14px;
   }
+  .item-table tr:last-child td { border-bottom: none; }
+  .edit-note {
+    color: #7ecfff; font-size: 12px;
+    margin-top: 16px; padding: 12px;
+    background: rgba(126,207,255,0.1);
+    border-radius: 8px; border-left: 3px solid #7ecfff;
+  }
+  .edit-note strong { color: #fff; }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="logo-circle">&#127968;</div>
-  <div class="shop-name">J. Sons Bharat Traders</div>
-  <div class="owner-name">Nazish Nadeem</div>
-  <div class="tagline">Gypsum &bull; PVC Panels &bull; WPC Louvers &bull; Interiors</div>
-  <div class="divider"></div>
-</div>
+<div class="container">
 
-<div class="buttons-grid">
-
-  <a class="btn btn-contact" href="nazish-nadeem.vcf" download>
-    <div class="btn-icon">&#128100;</div>
-    <div class="btn-text">
-      <span class="btn-title">Save Contact</span>
-      <span class="btn-sub">Add to your phone contacts</span>
-    </div>
-  </a>
-
-  <a class="btn btn-whatsapp" href="https://wa.me/918955568624" target="_blank">
-    <div class="btn-icon">&#128172;</div>
-    <div class="btn-text">
-      <span class="btn-title">WhatsApp Chat</span>
-      <span class="btn-sub">Message us directly</span>
-    </div>
-  </a>
-
-  <a class="btn btn-location" href="https://maps.app.goo.gl/fiZUEHiMK8YpGxZ7A" target="_blank">
-    <div class="btn-icon">&#128205;</div>
-    <div class="btn-text">
-      <span class="btn-title">Shop Location</span>
-      <span class="btn-sub">Open in Google Maps</span>
-    </div>
-  </a>
-
-  <button class="btn btn-items" onclick="document.getElementById('itemModal').classList.add('active')">
-    <div class="btn-icon">&#128203;</div>
-    <div class="btn-text">
-      <span class="btn-title">Item List</span>
-      <span class="btn-sub">View all products &amp; accessories</span>
-    </div>
-  </button>
-
-</div>
-
-<div class="footer">
-  Tikri Rd, near SD Hospitals, Aurangabad, Bihar 824101<br>
-  +91 89555 68624 &nbsp;&bull;&nbsp; +91 72506 77411
-</div>
-
-<!-- Item List Modal -->
-<div class="modal-overlay" id="itemModal" onclick="if(event.target===this)this.classList.remove('active')">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title">&#128203; Product List</span>
-      <button class="modal-close" onclick="document.getElementById('itemModal').classList.remove('active')">&#10005;</button>
+  <!-- Main Page -->
+  <div id="mainPage">
+    <div class="header">
+      <div class="logo-circle">&#127968;</div>
+      <div class="title">J. Sons Bharat Trader</div>
+      <div class="subtitle">Welcome! Please choose an option below.</div>
     </div>
 
-    <div class="section-title">Products</div>
-    <ul class="item-list">
-      <li>Gypsum Board</li>
-      <li>Gypsum Tiles</li>
-      <li>POP</li>
-      <li>PVC Panels</li>
-      <li>WPC Louvers</li>
-      <li>Fluted PVC Panels</li>
-      <li>Charcoal Louvers</li>
-      <li>UV Marble Sheet</li>
-      <li>Wallpaper</li>
-      <li>PVC Flooring Sheet and Planks</li>
-      <li>Mold</li>
-      <li>Artificial Grass</li>
-    </ul>
+    <div class="buttons">
+      <button class="btn btn-contact" onclick="saveContact()">
+        <div class="btn-icon">&#128100;</div>
+        <div class="btn-text">
+          <span class="btn-title">Save Contact</span>
+          <span class="btn-sub">Add to your phone contacts</span>
+        </div>
+      </button>
 
-    <div class="section-title">Accessories</div>
-    <ul class="item-list">
-      <li>Section Channel</li>
-      <li>Bottom Channel</li>
-      <li>Cross Channel</li>
-      <li>L Angle</li>
-      <li>Parameter</li>
-      <li>Jali / Net</li>
-      <li>Bond</li>
-      <li>Clip</li>
-      <li>Strip</li>
-      <li>Golden Profile</li>
-      <li>Fischer</li>
-      <li>Screw</li>
-    </ul>
+      <a class="btn btn-whatsapp" href="https://wa.me/918955568624?text=Welcome%20to%20J.%20Sons%20Bharat%20Trader!%0AThank%20you%20for%20contacting%20us.%0AHow%20may%20we%20help%20you%3F" target="_blank">
+        <div class="btn-icon">&#128172;</div>
+        <div class="btn-text">
+          <span class="btn-title">Chat with Us on WhatsApp</span>
+          <span class="btn-sub">Message us directly</span>
+        </div>
+      </a>
+
+      <a class="btn btn-location" href="https://maps.app.goo.gl/fiZUEHiMK8YpGxZ7A" target="_blank">
+        <div class="btn-icon">&#128205;</div>
+        <div class="btn-text">
+          <span class="btn-title">Open Location</span>
+          <span class="btn-sub">View shop in Google Maps</span>
+        </div>
+      </a>
+
+      <button class="btn btn-items" onclick="showItemList()">
+        <div class="btn-icon">&#128203;</div>
+        <div class="btn-text">
+          <span class="btn-title">View Item List</span>
+          <span class="btn-sub">See all products & prices</span>
+        </div>
+      </button>
+    </div>
   </div>
+
+  <!-- Item List Page -->
+  <div id="itemPage" class="item-page">
+    <button class="back-btn" onclick="showMainPage()">&#8592; Back to Home</button>
+    
+    <div class="header">
+      <div class="title">Product List</div>
+      <div class="subtitle">All available items</div>
+    </div>
+
+    <div class="item-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Price</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- EASY TO EDIT: Add more rows here -->
+          <tr>
+            <td>Gypsum Board</td>
+            <td>₹350/sq ft</td>
+            <td>Standard quality</td>
+          </tr>
+          <tr>
+            <td>PVC Panels</td>
+            <td>₹45/sq ft</td>
+            <td>Various designs</td>
+          </tr>
+          <tr>
+            <td>WPC Louvers</td>
+            <td>₹120/sq ft</td>
+            <td>Weather resistant</td>
+          </tr>
+          <tr>
+            <td>Fluted PVC Panels</td>
+            <td>₹65/sq ft</td>
+            <td>Modern design</td>
+          </tr>
+          <tr>
+            <td>UV Marble Sheet</td>
+            <td>₹95/sq ft</td>
+            <td>Marble finish</td>
+          </tr>
+          <tr>
+            <td>Wallpaper</td>
+            <td>₹25/sq ft</td>
+            <td>Multiple patterns</td>
+          </tr>
+          <tr>
+            <td>PVC Flooring</td>
+            <td>₹55/sq ft</td>
+            <td>Planks & sheets</td>
+          </tr>
+          <tr>
+            <td>Artificial Grass</td>
+            <td>₹80/sq ft</td>
+            <td>Natural look</td>
+          </tr>
+          <!-- ADD MORE ITEMS HERE: Copy a <tr> block and edit the values -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="edit-note">
+      <strong>📝 Easy to Edit:</strong> To add, remove, or update items, simply edit the table rows in the HTML. Copy an existing row and change the Item Name, Price, and Description values.
+    </div>
+  </div>
+
 </div>
+
+<script>
+// Save Contact Function (Opens native phone contact screen)
+function saveContact() {
+  // Create vCard data
+  const vCard = `BEGIN:VCARD
+VERSION:3.0
+FN:Nazish Nadeem
+N:Nadeem;Nazish;;;
+ORG:J. Sons Bharat Trader
+TEL;TYPE=CELL:+918955568624
+TEL;TYPE=CELL:+917250677411
+EMAIL:jsonsbharattraders@gmail.com
+EMAIL:jsons.bharat226@gmail.com
+EMAIL:nazishnadeem2010@gmail.com
+ADR;TYPE=WORK:;;Tikri Rd, near SD Hospitals;Aurangabad;Bihar;824101;India
+END:VCARD`;
+  
+  // Create blob and download link
+  const blob = new Blob([vCard], { type: 'text/vcard' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'Nazish_Nadeem.vcf';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+// Show Item List Page
+function showItemList() {
+  document.getElementById('mainPage').style.display = 'none';
+  document.getElementById('itemPage').classList.add('active');
+}
+
+// Show Main Page
+function showMainPage() {
+  document.getElementById('mainPage').style.display = 'block';
+  document.getElementById('itemPage').classList.remove('active');
+}
+</script>
 
 </body>
 </html>
