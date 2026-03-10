@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>J. Sons Bharat Traders</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 16px 40px;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 28px;
+    margin-top: 10px;
+  }
+  .logo-circle {
+    width: 80px; height: 80px;
+    background: linear-gradient(135deg, #e94560, #f5a623);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 14px;
+    font-size: 32px;
+    box-shadow: 0 4px 20px rgba(233,69,96,0.4);
+  }
+  .shop-name {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+  }
+  .owner-name {
+    color: #a8c6fa;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  .tagline {
+    color: #7ecfff;
+    font-size: 12px;
+    margin-top: 6px;
+    opacity: 0.85;
+  }
+  .divider {
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, #e94560, #f5a623);
+    border-radius: 2px;
+    margin: 14px auto 0;
+  }
+  .buttons-grid {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .btn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    border-radius: 16px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 600;
+    color: #fff;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    width: 100%;
+    text-align: left;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-icon {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .btn-text { display: flex; flex-direction: column; }
+  .btn-title { font-size: 16px; font-weight: 700; }
+  .btn-sub { font-size: 12px; font-weight: 400; opacity: 0.85; margin-top: 2px; }
+  .btn-contact { background: linear-gradient(135deg, #1e3c72, #2a5298); }
+  .btn-contact .btn-icon { background: rgba(255,255,255,0.15); }
+  .btn-whatsapp { background: linear-gradient(135deg, #075e54, #128c7e); }
+  .btn-whatsapp .btn-icon { background: rgba(255,255,255,0.15); }
+  .btn-location { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+  .btn-location .btn-icon { background: rgba(255,255,255,0.15); }
+  .btn-items { background: linear-gradient(135deg, #6a3093, #a044ff); }
+  .btn-items .btn-icon { background: rgba(255,255,255,0.15); }
+  .footer {
+    margin-top: 32px;
+    color: rgba(255,255,255,0.4);
+    font-size: 11px;
+    text-align: center;
+  }
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed; top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.75);
+    z-index: 100;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: #1a1a2e;
+    border-radius: 24px 24px 0 0;
+    width: 100%;
+    max-width: 480px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 24px 20px 40px;
+    border-top: 3px solid #a044ff;
+  }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .modal-title { color: #fff; font-size: 18px; font-weight: 700; }
+  .modal-close {
+    background: rgba(255,255,255,0.1);
+    border: none; color: #fff;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .section-title {
+    color: #a044ff;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 18px 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(160,68,255,0.3);
+  }
+  .item-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .item-list li {
+    color: #e0e0e0;
+    font-size: 15px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .item-list li::before {
+    content: '\2713';
+    color: #a044ff;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-circle">&#127968;</div>
+  <div class="shop-name">J. Sons Bharat Traders</div>
+  <div class="owner-name">Nazish Nadeem</div>
+  <div class="tagline">Gypsum &bull; PVC Panels &bull; WPC Louvers &bull; Interiors</div>
+  <div class="divider"></div>
+</div>
+
+<div class="buttons-grid">
+
+  <a class="btn btn-contact" href="nazish-nadeem.vcf" download>
+    <div class="btn-icon">&#128100;</div>
+    <div class="btn-text">
+      <span class="btn-title">Save Contact</span>
+      <span class="btn-sub">Add to your phone contacts</span>
+    </div>
+  </a>
+
+  <a class="btn btn-whatsapp" href="https://wa.me/918955568624" target="_blank">
+    <div class="btn-icon">&#128172;</div>
+    <div class="btn-text">
+      <span class="btn-title">WhatsApp Chat</span>
+      <span class="btn-sub">Message us directly</span>
+    </div>
+  </a>
+
+  <a class="btn btn-location" href="https://maps.app.goo.gl/fiZUEHiMK8YpGxZ7A" target="_blank">
+    <div class="btn-icon">&#128205;</div>
+    <div class="btn-text">
+      <span class="btn-title">Shop Location</span>
+      <span class="btn-sub">Open in Google Maps</span>
+    </div>
+  </a>
+
+  <button class="btn btn-items" onclick="document.getElementById('itemModal').classList.add('active')">
+    <div class="btn-icon">&#128203;</div>
+    <div class="btn-text">
+      <span class="btn-title">Item List</span>
+      <span class="btn-sub">View all products &amp; accessories</span>
+    </div>
+  </button>
+
+</div>
+
+<div class="footer">
+  Tikri Rd, near SD Hospitals, Aurangabad, Bihar 824101<br>
+  +91 89555 68624 &nbsp;&bull;&nbsp; +91 72506 77411
+</div>
+
+<!-- Item List Modal -->
+<div class="modal-overlay" id="itemModal" onclick="if(event.target===this)this.classList.remove('active')">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">&#128203; Product List</span>
+      <button class="modal-close" onclick="document.getElementById('itemModal').classList.remove('active')">&#10005;</button>
+    </div>
+
+    <div class="section-title">Products</div>
+    <ul class="item-list">
+      <li>Gypsum Board</li>
+      <li>Gypsum Tiles</li>
+      <li>POP</li>
+      <li>PVC Panels</li>
+      <li>WPC Louvers</li>
+      <li>Fluted PVC Panels</li>
+      <li>Charcoal Louvers</li>
+      <li>UV Marble Sheet</li>
+      <li>Wallpaper</li>
+      <li>PVC Flooring Sheet and Planks</li>
+      <li>Mold</li>
+      <li>Artificial Grass</li>
+    </ul>
+
+    <div class="section-title">Accessories</div>
+    <ul class="item-list">
+      <li>Section Channel</li>
+      <li>Bottom Channel</li>
+      <li>Cross Channel</li>
+      <li>L Angle</li>
+      <li>Parameter</li>
+      <li>Jali / Net</li>
+      <li>Bond</li>
+      <li>Clip</li>
+      <li>Strip</li>
+      <li>Golden Profile</li>
+      <li>Fischer</li>
+      <li>Screw</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>
