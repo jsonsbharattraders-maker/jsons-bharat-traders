@@ -41,7 +41,6 @@
         .btn-icon { background: rgba(255,255,255,0.15); }
         
         .page { display: none; }
-        .page.active { display: block !important; }
         
         .back-btn { background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.3); color: #fff; padding: 10px 20px; border-radius: 10px; cursor: pointer; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; }
         
@@ -70,7 +69,7 @@
 <body>
     <div class="container">
         <!-- Main Page -->
-        <div id="mainPage" class="page active">
+        <div id="mainPage" class="page" style="display: block;">
             <div class="header">
                 <div class="logo-circle">🏠</div>
                 <h1 class="title">J. Sons Bharat Trader</h1>
@@ -109,7 +108,7 @@
         </div>
 
         <!-- Item List Page -->
-        <div id="itemPage" class="page">
+        <div id="itemPage" class="page" style="display: none;">
             <button class="back-btn" onclick="showPage('mainPage')">← Back to Home</button>
             <h2 class="title" style="margin-bottom: 20px;">Product List</h2>
             
